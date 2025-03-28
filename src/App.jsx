@@ -1,17 +1,50 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import { createBrowserRouter } from 'react-router-dom'
-import RootLayout from './pages/RootLayout'
-import ErrorPage from './pages/ErrorPage'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import RootLayout from './pages/RootLayout.jsx'
+import ErrorPage from './pages/ErrorPage.jsx'
+import Register from './pages/Register.jsx'
+import Elections from './pages/Elections.jsx'
+import ElectionDetails from './pages/ElectionDetails.jsx'
+import Candidates from './pages/Candidates.jsx'
+import Congrats from './pages/Congrats.jsx'
+import Results from './pages/Results.jsx'
+import Login from './pages/Login.jsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout/>,
     errorElement: <ErrorPage />,
-    childern: [
+    children: [
+      {
+        index: true,
+        element: <Login />
+      },
+      {
+        path: "register",
+        element: <Register/>
+      },
+      {
+        path: "results",
+        element: <Results />
+      },
+      {
+        path: "elections",
+        element: <Elections />
+      },
+      {
+        path: "election/:id",
+        element: <ElectionDetails/>
+      },
+      {
+        path:"elections/:id/candidates",
+        element: <Candidates />
+      },
+      {
+        path: "congrats",
+        element: <Congrats/>
+      },
 
     ]
   }
@@ -22,7 +55,7 @@ function App() {
 
   return (
     <>
-      <div className='bg-red-100 w-full h-3xl'> huifweh</div>
+      <RouterProvider router= {router} />
     </>
   )
 }
