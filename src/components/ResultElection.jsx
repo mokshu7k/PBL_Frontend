@@ -14,7 +14,7 @@ const ResultElection = ({ id, thumbnail, title }) => {
     })
 
     return (
-        <article className="result bg-gray-100 rounded-lg shadow-lg p-2 m-2 mb-4 overflow-hidden flex flex-col">
+        <article className="result bg-gray-100 rounded-lg shadow-lg p-2 w-10/12 mb-4 overflow-hidden flex flex-col">
             <header className="result_header flex items-center justify-between bg-gray-200 border-2 border-gray-50 rounded-md">
                 <h4 className="font-bold p-2">{title}</h4>
                 <div className="result_header-image w-12 aspect-square overflow-hidden rounded-full m-2"> <img src={thumbnail} alt={title} /> </div>
@@ -26,6 +26,7 @@ const ResultElection = ({ id, thumbnail, title }) => {
                 }
             </ul>
         </article>
+
     )
 }
 
