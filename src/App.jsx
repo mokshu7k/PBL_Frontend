@@ -10,6 +10,9 @@ import Candidates from './pages/Candidates.jsx'
 import Congrats from './pages/Congrats.jsx'
 import Results from './pages/Results.jsx'
 import Login from './pages/Login.jsx'
+import Landing from './pages/Landing.jsx'
+import About from './pages/About.jsx'
+import Candidate from './pages/Candidate.jsx'
 
 const router = createBrowserRouter([
   {
@@ -19,11 +22,19 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Login />
+        element: <Landing />
+      },
+      {
+        path:"login",
+        element:<Login />
       },
       {
         path: "register",
         element: <Register/>
+      },
+      {
+        path:"about",
+        element: <About />
       },
       {
         path: "results",
