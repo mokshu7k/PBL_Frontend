@@ -18,7 +18,8 @@ export const elections = [
                         obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis quas aliquid.`,
         thumbnail: Thumbnail1,
         candidates: ["c1", "c2", "c3", "c4"],
-        voters: []
+        voters: [],
+        status:"ongoing"
     },
     {
         id: "e2",
@@ -27,7 +28,8 @@ export const elections = [
                         obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis quas aliquid.`,
         thumbnail: Thumbnail2,
         candidates: ["c1", "c2", "c3", "c4"],
-        voters: []
+        voters: [],
+        status:"ongoing"
     },
     {
         id: "e3",
@@ -36,7 +38,8 @@ export const elections = [
                         obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis quas aliquid.`,
         thumbnail: Thumbnail3,
         candidates: [],
-        voters: []
+        voters: [],
+        status:"past"
     },
 ]
 

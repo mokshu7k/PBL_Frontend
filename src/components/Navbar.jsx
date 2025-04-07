@@ -40,7 +40,6 @@ const Navbar = () => {
                     <NavLink to="/results">Results</NavLink>
                     <NavLink to="/logout">Logout</NavLink>
                 </menu>
-                
                 <button className='bg-transparent font-stretch-100% flex duration-200 ease-in-out hover:opacity-5'><HiOutlineBars3 /></button>
             </div>
         </div>

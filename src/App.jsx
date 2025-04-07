@@ -12,7 +12,13 @@ import Results from './pages/Results.jsx'
 import Login from './pages/Login.jsx'
 import Landing from './pages/Landing.jsx'
 import About from './pages/About.jsx'
-import Candidate from './pages/Candidate.jsx'
+import Home from './pages/Home.jsx'
+import Logout from './pages/Logout.jsx'
+import { MyCommunitiesAdmin, MyCommunitiesVoter } from './pages/MyCommunities.jsx';
+import CreateCommunity from './pages/CreateCommunity.jsx'
+import JoinCommunity from './pages/JoinCommunity.jsx'
+import Profile from './pages/Profile.jsx'
+import ManageCommunity from './pages/ManageCommunity.jsx'
 
 const router = createBrowserRouter([
   {
@@ -23,6 +29,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Landing />
+      },
+      {
+        path:"home",
+        element: <Home />
       },
       {
         path:"login",
@@ -56,6 +66,44 @@ const router = createBrowserRouter([
         path: "congrats",
         element: <Congrats/>
       },
+      {
+        path:"logout",
+        element:<Logout />
+      },
+      {
+        path:'communities/:id/admin',
+        element:<MyCommunitiesAdmin />
+      },
+      {
+        path: 'communities/:id/voter',
+        element: <MyCommunitiesVoter />
+      },
+      {
+        path:'communitites/:id/admin/manage',
+        element:<ManageCommunity/>
+      },
+      // {
+      //   path: 'communities/:id/admin',
+      //   element: <MyCommunities role="admin" />
+      // },
+      // {
+      //   path: 'communities/:id/voter',
+      //   element: <MyCommunities role="voter" />
+      // },
+      
+      {
+        path:'communities/create',
+        element:<CreateCommunity />
+      },
+      {
+        path:'communities/:id/join',
+        element: <JoinCommunity />
+      },
+      {
+        path:'profile',
+        element:<Profile />
+      },
+
 
     ]
   }
