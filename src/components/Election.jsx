@@ -24,7 +24,7 @@ const Election = ({ id, title, description, thumbnail }) => {
         </p>
         <div className="flex justify-between items-center mt-4">
           <Link
-            to={`/elections/${id}`}
+            to={`/elections/${id}/candidates`}
             className="text-sm text-blue-500 hover:underline"
           >
             View

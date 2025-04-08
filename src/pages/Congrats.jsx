@@ -8,7 +8,7 @@ const Congrats = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate("/communities/default/voter");
+      navigate("/communities/default");
     }, 10000); // 3 seconds
 
     return () => clearTimeout(timer);
