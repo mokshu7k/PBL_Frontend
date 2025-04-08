@@ -14,7 +14,7 @@ import Landing from './pages/Landing.jsx'
 import About from './pages/About.jsx'
 import Home from './pages/Home.jsx'
 import Logout from './pages/Logout.jsx'
-import { MyCommunitiesAdmin, MyCommunitiesVoter } from './pages/MyCommunities.jsx';
+import MyCommunities from './pages/MyCommunities.jsx';
 import CreateCommunity from './pages/CreateCommunity.jsx'
 import JoinCommunity from './pages/JoinCommunity.jsx'
 import Profile from './pages/Profile.jsx'
@@ -51,11 +51,11 @@ const router = createBrowserRouter([
         element: <Results />
       },
       {
-        path: "elections",
+        path: "communities/:id/elections",
         element: <Elections />
       },
       {
-        path: "election/:id",
+        path: "elections/:id",
         element: <ElectionDetails/>
       },
       {
@@ -71,15 +71,11 @@ const router = createBrowserRouter([
         element:<Logout />
       },
       {
-        path:'communities/:id/admin',
-        element:<MyCommunitiesAdmin />
+        path: 'communities/:id',
+        element: <MyCommunities />
       },
       {
-        path: 'communities/:id/voter',
-        element: <MyCommunitiesVoter />
-      },
-      {
-        path:'communitites/:id/admin/manage',
+        path:'communities/:id/manage',
         element:<ManageCommunity/>
       },
       // {
@@ -92,7 +88,7 @@ const router = createBrowserRouter([
       // },
       
       {
-        path:'communities/create',
+        path:'communities/:id/create',
         element:<CreateCommunity />
       },
       {
