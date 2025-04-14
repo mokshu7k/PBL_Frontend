@@ -16,6 +16,7 @@ import Home from './pages/Home.jsx'
 import Logout from './pages/Logout.jsx'
 import MyCommunities from './pages/MyCommunities.jsx';
 import CreateCommunity from './pages/CreateCommunity.jsx'
+import CreateElection from './pages/CreateElections.jsx'
 import JoinCommunity from './pages/JoinCommunity.jsx'
 import Profile from './pages/Profile.jsx'
 import ManageCommunity from './pages/ManageCommunity.jsx'
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "results",
         element: <Results />
+      },
+      {
+        path: "communities/createelections",
+        element: <CreateElection />
       },
       {
         path: "communities/:id/elections",
