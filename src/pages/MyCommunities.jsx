@@ -83,7 +83,7 @@ import axios from 'axios';
 const MyCommunities = () => {
   const navigate = useNavigate();
   const [role, setRole] = useState('admin'); // 'admin' | 'voter'
-  const [communities, setCommunities] = useState([]);
+  const [communities, setCommunities] = useState({ admin: [], user: [] });
 
   useEffect(() => {
     const fetchCommunities = async () => {
@@ -103,6 +103,14 @@ const MyCommunities = () => {
 
     fetchCommunities();
   }, []);
+
+  const getDisplayedCommunities = () => {
+    if (role === 'admin') return communities.admin || [];
+    // Merge admin + user communities for voter role
+    return [...(communities.user || []), ...(communities.admin || [])];
+  };
+
+  const displayedCommunities = getDisplayedCommunities();
 
   return (
     <section className="flex min-h-screen bg-gray-50">
@@ -143,26 +151,32 @@ const MyCommunities = () => {
           </div>
         </header>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {(communities[role] || []).map((community) => (
-            <VerticalCard key={community._id}>
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-                Community: {community.community_key}
-              </h2>
-              <button
-                onClick={() =>
-                  role === 'admin'
-                    ? navigate(`/communities/${community._id}/manage`)
-                    : navigate(`/communities/${community._id}/elections`)
-                }
-                className="bg-blue-500 font-bold text-center text-white px-4 py-2 rounded-2xl
-                transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
-              >
-                Enter Election
-              </button>
-            </VerticalCard>
-          ))}
-        </div>
+        {displayedCommunities.length === 0 ? (
+          <p className="text-gray-500 text-lg">
+            No communities found for <span className="font-semibold">{role}</span> role.
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {displayedCommunities.map((communityName, index) => (
+              <VerticalCard key={index}>
+                <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                  {communityName}
+                </h2>
+                <button
+                  onClick={() =>
+                    role === 'admin'
+                      ? navigate(`/communities/${communityName}/manage`)
+                      : navigate(`/communities/${communityName}/elections`)
+                  }
+                  className="bg-blue-500 font-bold text-center text-white px-4 py-2 rounded-2xl
+                  transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+                >
+                  {role === 'admin' ? 'Start Election' : 'Enter Election'}
+                </button>
+              </VerticalCard>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
