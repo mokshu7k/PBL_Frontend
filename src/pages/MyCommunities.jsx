@@ -129,21 +129,19 @@ const MyCommunities = () => {
             <div className="mt-4 space-x-3">
               <button
                 onClick={() => setRole('admin')}
-                className={`px-4 py-2 rounded-lg transition ${
-                  role === 'admin'
+                className={`px-4 py-2 rounded-lg transition ${role === 'admin'
                     ? 'bg-blue-600 text-white'
                     : 'bg-gray-200 hover:bg-gray-300'
-                }`}
+                  }`}
               >
                 Admin
               </button>
               <button
                 onClick={() => setRole('voter')}
-                className={`px-4 py-2 rounded-lg transition ${
-                  role === 'voter'
+                className={`px-4 py-2 rounded-lg transition ${role === 'voter'
                     ? 'bg-blue-600 text-white'
                     : 'bg-gray-200 hover:bg-gray-300'
-                }`}
+                  }`}
               >
                 Voter
               </button>
@@ -157,24 +155,31 @@ const MyCommunities = () => {
           </p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {displayedCommunities.map((communityName, index) => (
+            {displayedCommunities.map((community, index) => (
               <VerticalCard key={index}>
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-                  {communityName}
+                  {community.collectionName}
                 </h2>
                 <button
-                  onClick={() =>
-                    role === 'admin'
-                      ? navigate(`/communities/${communityName}/manage`)
-                      : navigate(`/communities/${communityName}/elections`)
-                  }
+                  onClick={() => {
+                    // Store selected community key in localStorage
+                    localStorage.setItem('selectedCommunityKey', community.key);
+
+                    // Navigate to the appropriate route
+                    navigate(
+                      role === 'admin'
+                        ? `/communities/${community.collectionName}/manage`
+                        : `/communities/${community.collectionName}/elections`
+                    );
+                  }}
                   className="bg-blue-500 font-bold text-center text-white px-4 py-2 rounded-2xl
-                  transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+      transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
                 >
                   {role === 'admin' ? 'Start Election' : 'Enter Election'}
                 </button>
               </VerticalCard>
             ))}
+
           </div>
         )}
       </div>
