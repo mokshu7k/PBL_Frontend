@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Sidebar from '../components/SidebarLeft';
 
 const ManageCommunity = () => {
   const { id } = useParams();
+  const navigate = useNavigate(); // For navigation
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -42,6 +43,12 @@ const ManageCommunity = () => {
     fetchCandidates();
   }, []);
 
+  // Handle "Continue" button click
+  const handleContinue = () => {
+    // Redirect to the create election page
+    navigate(`/communities/${id}/createelections`);
+  };
+
   return (
     <section className="flex min-h-screen bg-gray-50">
       {/* Sidebar */}
@@ -71,12 +78,20 @@ const ManageCommunity = () => {
                 <p className="text-lg font-semibold text-gray-800">
                   {member.username || 'Unnamed'}
                 </p>
-                <p className="text-sm text-gray-600">{member.Name || 'No name provided'}</p>
-                <p className="text-sm text-gray-500">Age: {member.Age || 'N/A'}</p>
               </li>
             ))}
           </ul>
         )}
+
+        {/* Continue Button */}
+        <div className="mt-6">
+          <button
+            onClick={handleContinue}
+            className="bg-blue-600 text-white py-2 px-4 rounded-lg shadow hover:bg-blue-700 transition"
+          >
+            Continue to Create Election
+          </button>
+        </div>
       </div>
     </section>
   );

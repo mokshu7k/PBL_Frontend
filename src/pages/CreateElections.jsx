@@ -1,25 +1,55 @@
 import { useState, useEffect } from "react";
-import { ethers } from "ethers";
 import axios from "axios";
+import { ethers } from "ethers";
 import ElectionFactoryABI from "../abi/ElectionFactoryABI.json";
 
-const ELECTION_FACTORY_ADDRESS = "0x8bAFD7901c313Ae24292B2D26eEf4dC362e2Ed7C";
+const ELECTION_FACTORY_ADDRESS = "0x203bFf4ba915Cc4Fe048a5527E5E34C4d35A5cF5";
 
 export default function CreateElection() {
     const [electionName, setElectionName] = useState("");
-    const [candidateDropdowns, setCandidateDropdowns] = useState([""]);
+    const [candidateDropdowns, setCandidateDropdowns] = useState(["", ""]);
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
     // Fetch users from backend
     useEffect(() => {
-        axios.get("http://localhost:5001/api/users/all")
-            .then(res => setUsers(res.data))
-            .catch(err => console.error("Error fetching users:", err));
+        const fetchCandidates = async () => {
+            const communityKey = localStorage.getItem('selectedCommunityKey');
+            const token = localStorage.getItem('token');
+
+            if (!communityKey) {
+                setError('No community key found in localStorage. Please select a community again.');
+                setLoading(false);
+                return;
+            }
+
+            try {
+                const response = await axios.post('http://localhost:5001/getCandidates', {
+                    community_key: communityKey,
+                }, {
+                    headers: {
+                        'token': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                setUsers(response.data.candidates || []);
+            } catch (err) {
+                console.error('Error fetching candidates:', err);
+                setError('Failed to load candidates.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCandidates();
     }, []);
 
     const handleAddCandidate = () => {
-        setCandidateDropdowns([...candidateDropdowns, ""]);
+        if (candidateDropdowns.length < 5) {
+            setCandidateDropdowns([...candidateDropdowns, ""]);
+        }
     };
 
     const handleCandidateChange = (index, value) => {
@@ -31,31 +61,45 @@ export default function CreateElection() {
     const handleCreateElection = async () => {
         try {
             if (!window.ethereum) return alert("Please install MetaMask");
-
+    
             const provider = new ethers.BrowserProvider(window.ethereum);
             const signer = await provider.getSigner();
             const admin = await signer.getAddress();
-
-            const candidates = candidateDropdowns.filter(id => id);
-            if (candidates.length === 0) return alert("Select at least one candidate");
-
-            const voters = users; // assuming all users can vote
+    
+            // Filter out empty candidates
+            const candidates = candidateDropdowns.filter(candidate => candidate.trim() !== "");
+            if (candidates.length < 2) {
+                alert("Please select at least two candidates");
+                return;
+            }
+    
+            // Ensure election name is not empty
+            if (!electionName.trim()) {
+                alert("Please provide a valid election name");
+                return;
+            }
+    
+            // Filter out invalid users (if any)
+            const voters = users.filter(user => user.id && user.id.trim() !== "");
+    
+            // Calculate deposit amount
             const depositAmount = ((voters.length + 1) * 0.01).toString();
-
+    
             // Encode the data for createElection(name, voters, candidates)
             const iface = new ethers.Interface(ElectionFactoryABI);
             const encodedData = iface.encodeFunctionData("createElection", [
                 electionName,
-                voters.map(u => u.id), // or u.wallet if voter address is wallet
+                voters.map(u => u.id), // Assuming voters have an id field
                 candidates
             ]);
-
+    
+            // Send transaction
             const tx = await signer.sendTransaction({
                 to: ELECTION_FACTORY_ADDRESS,
                 data: encodedData,
                 value: ethers.parseEther(depositAmount),
             });
-
+    
             await tx.wait();
             alert("Election created! TX Hash: " + tx.hash);
         } catch (err) {
@@ -65,6 +109,10 @@ export default function CreateElection() {
             setLoading(false);
         }
     };
+    
+    if (loading) {
+        return <div>Loading candidates...</div>;
+    }
 
     return (
         <div className="p-6 max-w-xl mx-auto">
@@ -87,7 +135,7 @@ export default function CreateElection() {
                     <option value="">-- Select a user --</option>
                     {users.map(user => (
                         <option key={user.id} value={user.id}>
-                            {user.name}
+                            {user.username}
                         </option>
                     ))}
                 </select>
@@ -96,6 +144,7 @@ export default function CreateElection() {
             <button
                 className="mb-4 bg-gray-300 px-4 py-1 rounded"
                 onClick={handleAddCandidate}
+                disabled={candidateDropdowns.length >= 5}
             >
                 Add Another Candidate
             </button>
@@ -115,6 +164,8 @@ export default function CreateElection() {
             >
                 {loading ? "Creating..." : "Create Election"}
             </button>
+
+            {error && <div className="text-red-500 mt-4">{error}</div>}
         </div>
     );
 }

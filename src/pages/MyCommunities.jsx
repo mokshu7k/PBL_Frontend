@@ -95,6 +95,7 @@ const MyCommunities = () => {
             'Content-Type': 'application/json',
           },
         });
+        console.log(response.data);
         setCommunities(response.data);
       } catch (error) {
         console.error('Error fetching communities:', error);
