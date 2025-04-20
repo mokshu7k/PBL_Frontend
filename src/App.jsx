@@ -101,7 +101,7 @@ const router = createBrowserRouter([
         element: <JoinCommunity />
       },
       {
-        path:'profile',
+        path:'profile/:id',
         element:<Profile />
       },
 
