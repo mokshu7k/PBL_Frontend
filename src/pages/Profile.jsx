@@ -17,11 +17,11 @@ const Profile = () => {
         const headers = { Authorization: `Bearer ${token}` };
 
         const [userRes, createdRes, joinedRes, votedRes, activeRes] = await Promise.all([
-          axios.get("http://localhost:5001/user/me", { headers }),
-          axios.get("/api/elections/created", { headers }),
-          axios.get("/api/elections/joined", { headers }),
-          axios.get("/api/elections/voted", { headers }),
-          axios.get("/api/elections/active", { headers }),
+          axios.get("http://localhost:5001/user", { headers }),  
+          axios.get("http://localhost:5001/admin/createCommunity", { headers }), 
+          axios.get("http://localhost:5001/join_community", { headers }),  
+          axios.get("http://localhost:5001/voted", { headers }),  
+          axios.get("http://localhost:5001/activeElection", { headers }),  
         ]);
 
         setUser(userRes.data || {});
