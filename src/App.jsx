@@ -13,7 +13,6 @@ import Login from './pages/Login.jsx'
 import Landing from './pages/Landing.jsx'
 import About from './pages/About.jsx'
 import Home from './pages/Home.jsx'
-import Logout from './pages/Logout.jsx'
 import MyCommunities from './pages/MyCommunities.jsx';
 import CreateCommunity from './pages/CreateCommunity.jsx'
 import CreateElection from './pages/CreateElections.jsx'
@@ -73,10 +72,6 @@ const router = createBrowserRouter([
         element: <Congrats/>
       },
       {
-        path:"logout",
-        element:<Logout />
-      },
-      {
         path: 'communities/:id',
         element: <MyCommunities />
       },
@@ -102,7 +97,7 @@ const router = createBrowserRouter([
         element: <JoinCommunity />
       },
       {
-        path:'profile',
+        path:'profile/:id',
         element:<Profile />
       },
 
