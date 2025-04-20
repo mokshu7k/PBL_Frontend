@@ -15,16 +15,16 @@ const NavbarHome = () => {
                 <div className="flex items-center ml-auto gap-4">
                     <div className='flex gap-4 list-none'>
                         <NavLink 
+                          to="/home"
+                          className={({ isActive }) => isActive ? "text-white font-bold" : "text-gray-200"}
+                        >
+                          Home
+                        </NavLink>
+                        <NavLink 
                           to="/about"
                           className={({ isActive }) => isActive ? "text-white font-bold" : "text-gray-200"}
                         >
                           About
-                        </NavLink>
-                        <NavLink 
-                          to="/contactus"
-                          className={({ isActive }) => isActive ? "text-white font-bold" : "text-gray-200"}
-                        >
-                          Contact us
                         </NavLink>
                         <NavLink 
                           to="/logout"

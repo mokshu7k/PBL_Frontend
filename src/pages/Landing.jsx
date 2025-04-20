@@ -38,7 +38,7 @@ function Landing() {
           <h3 className="text-4xl font-bold text-blue-700">Stay Connected with Us!</h3>
           <p className="text-lg text-gray-700">Have questions or need help? Reach out to us:</p>
           <p className="text-2xl font-semibold text-blue-600">📞 +1 (123) 456-7890</p>
-          <p className="text-2xl font-semibold text-blue-600">✉️ contact@votesphere.com</p>
+          <p className="text-2xl font-semibold text-blue-600">✉️ castora@gmail.com</p>
           </div>
           <div>
           <img 
@@ -52,7 +52,7 @@ function Landing() {
       </main>
 
       <footer className="w-full bg-blue-500 text-white text-center p-4">
-        <p>&copy; 2025 VoteSphere. All rights reserved.</p>
+        <p>&copy; 2025 Castora. All rights reserved.</p>
       </footer>
     </div>
   );
